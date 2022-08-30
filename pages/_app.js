@@ -1,7 +1,14 @@
-import '../styles/globals.css'
+import { ThemeProvider } from 'next-themes';
+import '../styles/globals.css';
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
-}
+const MyApp = ({ Component, pageProps }) => (
+  <ThemeProvider attribute="class">
+    <div className="dark: bg-nft-dark bg-white min-h-screen">
+      <h1>Navbar</h1>
+      <Component {...pageProps} />
+      <h1>Footer</h1>
+    </div>
+  </ThemeProvider>
+);
 
-export default MyApp
+export default MyApp;
