@@ -4,6 +4,7 @@ import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import Link from 'next/link';
 import images from '../assets';
+import { Button } from './index';
 
 const MenuItems = ({ isMobile, active, setActive }) => {
   const generateLink = (i) => {
@@ -35,9 +36,33 @@ const MenuItems = ({ isMobile, active, setActive }) => {
   );
 };
 
+const ButtonGroup = ({ setActive, router }) => {
+  const hasConnected = true;
+
+  return hasConnected
+    ? (
+      <Button
+        btnName="Create"
+        classStyles="mx-2 rounded-xl"
+        handleClick={() => {
+          setActive('');
+          router.push('/create-nft');
+          console.log('Wow');
+        }}
+      />
+    ) : (
+      <Button
+        btnName="Connect"
+        classStyles="mx-2 rounded-xl"
+        handleClick={() => {}}
+      />
+    );
+};
+
 const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const [active, setActive] = useState('Explore NFTs');
+  const router = useRouter();
   console.log({ theme });
   return (
     <nav className="flexBetween w-full fixed
@@ -95,15 +120,17 @@ const Navbar = () => {
             <div className="w-3 h-3 absolute bg-white rounded-full ball" />
           </label>
         </div>
-      </div>
-      <div className="md:hidden flex">
-        <ul className="list-none flexCenter flex-row">
+        <div className="md:hidden flex">
           <MenuItems
             active={active}
             setActive={setActive}
           />
-        </ul>
+          <div className="ml-4">
+            <ButtonGroup setActive={setActive} router={router} />
+          </div>
+        </div>
       </div>
+      <div />
     </nav>
   );
 };
