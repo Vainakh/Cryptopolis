@@ -5,6 +5,9 @@ const Banner = ({ name, childStyles, parentStyle }) => (
     <div className="absolute w-72 h-72 sm:w-56 sm:h-56 rounded-full -bottom-24 -right-14 -z-5 white-bg" />
     <div className="absolute w-52 h-52 sm:w-56 sm:h-56 rounded-full -bottom-34 -right-14 -z-5 white-bg" />
     <div className="absolute w-44 h-44 sm:w-56 sm:h-56 rounded-full -bottom-04 -right-20 -z-5 white-bg" />
+    <div className="absolute w-20 h-20 sm:w-56 sm:h-56 rounded-full -bottom 04 -right 20 -z-5 white-bg" />
+    <div className="absolute w-20 h-20 sm:w-56 sm:h-56 rounded-full -bottom 14 -right 40 -z-5 white-bg" />
+    <div className="absolute w-20 h-20 sm:w-56 sm:h-56 rounded-full -bottom-10 -left 70 -z-5 white-bg" />
   </div>
 );
 
