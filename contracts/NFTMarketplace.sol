@@ -23,7 +23,7 @@ contract NFTMarketplace is ERC721URIStorage {
         address payable owner;
         uint256 price;
         bool sold;
-    };
+    }
 
     event MarketItemCreated(
         uint256 indexed tokenId,
@@ -34,15 +34,24 @@ contract NFTMarketplace is ERC721URIStorage {
     );
 
     constructor() {
-        owner = payable(msg.sender;
-    };
+        owner = payable(msg.sender);
+    }
 
     function updateListingPrice(uint _listingPrice) public payable {
         require(owner == msg.sender, "Only marketplace owner can update the price");
         listingPrice = _listingPrice;
-    };
+    }
 
     function getListingPrice() public view returns (uint256) {
         return listingPrice;
+    }
+
+    function createToken(string memory tokenURI, uint256 price) public payable returns (uint) {
+        _tokenIds.increment();
+        uint256 newTokenId = _tokenIds.current();
+        _mint(msg.sender, newTokenId);
+        _setTokenURI(newTokenId, tokenURI);
+        createMarketItem(newTokenId, price);
+        return newTokenId;
     }
 }
