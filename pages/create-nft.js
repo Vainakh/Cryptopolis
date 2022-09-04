@@ -11,6 +11,7 @@ import images from '../assets';
 
 const CreateNFT = () => {
   const [fileUrl, setFileUrl] = useState(null);
+  const [formInput, setFormInput] = useState({ price: '', name: '', description: '' });
   const { theme } = useTheme();
 
   const onDrop = useCallback(async (acceptedFile) => {
@@ -31,6 +32,8 @@ const CreateNFT = () => {
       ${isDragReject ? ' border-file-reject ' : ''}`),
     [isDragActive, isDragReject, isDragAccept],
   );
+
+  console.log(formInput);
 
   return (
     <div className="flex justify-center sm:px-4 p-12">
@@ -55,7 +58,7 @@ const CreateNFT = () => {
                     height={100}
                     objectFit="contain"
                     alt="file upload"
-                    className={theme === 'light' ? 'filter invert' : ''}
+                    className={theme === 'light' ? 'filter invert' : undefined}
                   />
                 </div>
                 <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-sm">Drag and Drop File</p>
@@ -75,8 +78,28 @@ const CreateNFT = () => {
           inputType="input"
           title="Name"
           placeholder="NFT Name"
-          handleClick={() => {}}
+          handleClick={(event) => setFormInput({ ...formInput, name: event.target.value })}
         />
+        <Input
+          inputType="text-area"
+          title="Description"
+          placeholder="NFT Description"
+          handleClick={(event) => setFormInput({ ...formInput, description: event.target.value })}
+        />
+        <Input
+          inputType="number"
+          title="Price"
+          placeholder="NFT Price"
+          handleClick={(event) => setFormInput({ ...formInput, price: event.target.value })}
+        />
+        <div className="mt-7 w-full flex justify-end">
+          <Button
+            btnName="Create NFT"
+            btnType="primary"
+            classStyles="rounded-xl"
+            handleClick={() => {}}
+          />
+        </div>
       </div>
     </div>
   );
