@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useTheme } from 'next-themes';
 
 // import { NFTContext } from '../context/NFTContext';
-import { Button, Input, Loader } from '../components';
+import { Button, Input, Loader } from '../components/index';
 import images from '../assets';
 
 const CreateNFT = () => {
@@ -26,9 +26,9 @@ const CreateNFT = () => {
   const fileStyle = useMemo(
     () => (
       `dark:bg-nft-black-1 bg-white border dark:border-white border-nft-gray-2 flex flex-col items-center p-5 rounded-sm border-dashed  
-       ${isDragActive && ' border-file-active '} 
-       ${isDragAccept && ' border-file-accept '} 
-       ${isDragReject && ' border-file-reject '}`),
+      ${isDragActive ? ' border-file-active ' : ''} 
+      ${isDragAccept ? ' border-file-accept ' : ''} 
+      ${isDragReject ? ' border-file-reject ' : ''}`),
     [isDragActive, isDragReject, isDragAccept],
   );
 
@@ -55,15 +55,28 @@ const CreateNFT = () => {
                     height={100}
                     objectFit="contain"
                     alt="file upload"
-                    className={theme === 'light' && 'filter invert'}
+                    className={theme === 'light' ? 'filter invert' : ''}
                   />
                 </div>
                 <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-sm">Drag and Drop File</p>
                 <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-sm mt-2">Or browse media on your device</p>
               </div>
             </div>
+            { fileUrl && (
+              <aside>
+                <div>
+                  <img src={fileUrl} alt="asset_file" />
+                </div>
+              </aside>
+            )}
           </div>
         </div>
+        <Input
+          inputType="input"
+          title="Name"
+          placeholder="NFT Name"
+          handleClick={() => {}}
+        />
       </div>
     </div>
   );
