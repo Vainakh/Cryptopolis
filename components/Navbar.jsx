@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import images from '../assets';
 import { Button } from './index';
+import { NFTContext } from '../context/NFTContext';
 
 const MenuItems = ({ isMobile, active, setActive }) => {
   const generateLink = (i) => {
@@ -37,9 +38,10 @@ const MenuItems = ({ isMobile, active, setActive }) => {
 };
 
 const ButtonGroup = ({ setActive, router }) => {
-  const hasConnected = true;
+  const { connectWallet, currentAccount } = useContext(NFTContext);
+  console.log({ currentAccount });
 
-  return hasConnected
+  return currentAccount
     ? (
       <Button
         btnName="Create"
@@ -54,7 +56,7 @@ const ButtonGroup = ({ setActive, router }) => {
       <Button
         btnName="Connect"
         classStyles="mx-2 rounded-xl"
-        handleClick={() => {}}
+        handleClick={connectWallet}
       />
     );
 };

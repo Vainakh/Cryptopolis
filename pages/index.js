@@ -3,7 +3,7 @@ import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import { Banner, CreatorCard, NFTCard } from '../components';
 import images from '../assets';
-import { makeId } from '../utils/makeId';
+import { makeid } from '../utils/makeId';
 
 const Home = () => {
   const { theme } = useTheme();
@@ -43,7 +43,6 @@ const Home = () => {
     };
   });
 
-  console.log(makeId(3));
   return (
     <div className="flex justify-center sm:px-4 p-12">
       <div className="w-full minmd:w-4/5">
@@ -61,7 +60,7 @@ const Home = () => {
                   key={`creator-${i}`}
                   rank={i}
                   creatorImage={images[`creator${i}`]}
-                  creatorName={`0x${makeId(3)}...${makeId(4)}`}
+                  creatorName={`0x${makeid(3)}...${makeid(4)}`}
                   creatorEths={10 - i * 0.5}
                 />
               ))}
@@ -95,8 +94,8 @@ const Home = () => {
                   i,
                   name: `Nifty NFT ${i}`,
                   price: (10 - i * 0.534).toFixed(2),
-                  seller: `0x${makeId(3)}...${makeId(4)}`,
-                  owner: `0x${makeId(3)}...${makeId(4)}`,
+                  seller: `0x${makeid(3)}...${makeid(4)}`,
+                  owner: `0x${makeid(3)}...${makeid(4)}`,
                   description: 'Cool NFT on Sale',
                 }}
               />
