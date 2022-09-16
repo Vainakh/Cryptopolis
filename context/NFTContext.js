@@ -16,12 +16,18 @@ const client = create({
     authorization,
   },
 });
+const fetchContract = (signerOrProvider) => new ethers.Contract(MarketAddress, MarketAddressABI, signerOrProvider);
 
 export const NFTContext = React.createContext();
 
 export const NFTProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState('');
   const nftCurrency = 'Kosmos';
+
+  useEffect(() => {
+    checkIfWalletIsConnect();
+    createSale('test', '0.025');
+  }, []);
 
   const connectWallet = async () => {
     if (!window.ethereum) return alert('Please install MetaMask.');
@@ -43,10 +49,6 @@ export const NFTProvider = ({ children }) => {
       console.log('No accounts found');
     }
   };
-
-  useEffect(() => {
-    checkIfWalletIsConnect();
-  }, []);
 
   const uploadToIPFS = async (file, setFileUrl) => {
     try {
@@ -73,13 +75,14 @@ export const NFTProvider = ({ children }) => {
     }
   };
 
-  const createSale = async (url, fullInputPrice, isReselling, Id) => {
+  const createSale = async (url, formInputPrice, isReselling, Id) => {
     const web3modal = new Web3Modal();
     const connection = await web3modal.connect();
-    const provider = await ethers.providers.Web3Provider(connection);
+    const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
-    const price = ethers.utils.parseUnits(formInputPrice, 'ethers');
+    const price = ethers.utils.parseUnits(formInputPrice, 'ether');
     const contract = fetchContract(signer);
+    console.log({ contract });
   };
 
   return (
