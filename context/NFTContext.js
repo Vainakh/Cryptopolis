@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { ethers } from 'ethers';
+import { ethers, utils } from 'ethers';
 import Web3Modal from 'web3modal';
 import axios from 'axios';
+import { create } from 'ipfs-http-client';
+import CreateNFT from '../pages/create-nft';
 
 import { MarketAddress, MarketAddressABI } from './constants';
+
+const projectId = '2EkC73kHZ7FbaOWnRmZLN1eUJyK';
+const projectSecret = '292313816d6190ac4ce5f5abb9830cf7';
+const authorization = `Basic ${Buffer.from(`${projectId}:${projectSecret}`).toString('base64')}`;
+const client = create({
+  url: 'https://infura-ipfs.io:5001/api/v0',
+  headers: {
+    authorization,
+  },
+});
 
 export const NFTContext = React.createContext();
 
@@ -20,7 +32,6 @@ export const NFTProvider = ({ children }) => {
     window.location.reload();
   };
 
-  // check if is connected and set to the current state
   const checkIfWalletIsConnect = async () => {
     if (!window.ethereum) return alert('Please install MetaMask.');
 
@@ -33,66 +44,24 @@ export const NFTProvider = ({ children }) => {
     }
   };
 
-  // on every render of the page
   useEffect(() => {
     checkIfWalletIsConnect();
   }, []);
 
+  const uploadToIPFS = async (file, setFileUrl) => {
+    try {
+      const added = await client.add({ content: file });
+      const url = `https://infura-ipfs.io/ipfs/${added.path}`;
+
+      return url;
+    } catch (error) {
+      console.log(`Error uploading file to IPFS${error}`);
+    }
+  };
+
   return (
-    <NFTContext.Provider value={{ nftCurrency, connectWallet, currentAccount }}>
+    <NFTContext.Provider value={{ nftCurrency, connectWallet, currentAccount, uploadToIPFS }}>
       {children}
     </NFTContext.Provider>
   );
 };
-
-// export const connectWallet = async () => {
-//     if (window.ethereum) { //check if Metamask is installed
-//           try {
-//               const address = await window.ethereum.enable(); //connect Metamask
-//               const obj = {
-//                       connectedStatus: true,
-//                       status: "",
-//                       address: address
-//                   }
-//                   return obj;
-
-//           } catch (error) {
-//               return {
-//                   connectedStatus: false,
-//                   status: "🦊 Connect to Metamask using the button on the top right."
-//               }
-//           }
-
-//     } else {
-//           return {
-//               connectedStatus: false,
-//               status: "🦊 You must install Metamask into your browser: https://metamask.io/download.html"
-//           }
-//         }
-//   };
-
-// if (window.ethereum) { // check if Metamask is installed
-//     try {
-//       const address = await window.ethereum.enable(); // connect Metamask
-//       const accounts = await window.etherium.request({ method: 'eth accounts' });
-//       console.log({ address });
-//       console.log({ accounts });
-//       const obj = {
-//         connectedStatus: true,
-//         status: '',
-//         address,
-//       };
-//       return obj;
-//     } catch (error) {
-//       return {
-//         connectedStatus: false,
-//         status: '🦊 Connect to Metamask using the button on the top right.',
-//       };
-//     }
-//   } else {
-//     return {
-//       connectedStatus: false,
-//       status: '🦊 You must install Metamask into your browser: https://metamask.io/download.html',
-//     };
-//   }
-// };
