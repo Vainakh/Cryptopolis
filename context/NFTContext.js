@@ -59,6 +59,29 @@ export const NFTProvider = ({ children }) => {
     }
   };
 
+  const createNFT = async (formInput, fileUrl, router) => {
+    const { name, description, price } = formInput;
+    if (!name || !description || !price || !fileUrl) return;
+    const data = JSON.stringify({ name, description, image: fileUrl });
+    try {
+      const added = await client.add(data);
+      const url = `https://infura-ipfs.io/ipfs/${added.path}`;
+      await createSale(url, price);
+      router.push('/');
+    } catch (error) {
+      console.log(`Error uploading file to IPFS :" ${error}`);
+    }
+  };
+
+  const createSale = async (url, fullInputPrice, isReselling, Id) => {
+    const web3modal = new Web3Modal();
+    const connection = await web3modal.connect();
+    const provider = await ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+    const price = ethers.utils.parseUnits(formInputPrice, 'ethers');
+    const contract = fetchContract(signer);
+  };
+
   return (
     <NFTContext.Provider value={{ nftCurrency, connectWallet, currentAccount, uploadToIPFS }}>
       {children}
