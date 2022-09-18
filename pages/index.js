@@ -8,6 +8,7 @@ import { NFTContext } from '../context/NFTContext';
 
 const Home = () => {
   const { fetchNFTs } = useContext(NFTContext);
+  const [nfts, setNFTs] = useState([]);
   const { theme } = useTheme();
   const parentRef = useRef(null);
   const scrollRef = useRef();
@@ -15,7 +16,10 @@ const Home = () => {
 
   useEffect(() => {
     fetchNFTs()
-      .then(() => {});
+      .then((items) => {
+        setNFTs(items);
+        console.log(items);
+      });
   }, []);
 
   const handleScroll = (direction) => {
@@ -74,10 +78,22 @@ const Home = () => {
               {!hideButtons && (
               <>
                 <div onClick={() => handleScroll('left')} className="absolute w-8 h-8 minlg:w-12 minlg:h-12 top-45 cursor-pointer left-0">
-                  <Image src={images.left} layout="fill" objectFit="contain" alt="left_arrow" className={theme === 'light' ? 'filter invert' : undefined} />
+                  <Image
+                    src={images.left}
+                    layout="fill"
+                    objectFit="contain"
+                    alt="left_arrow"
+                    className={theme === 'light' ? 'filter invert' : undefined}
+                  />
                 </div>
                 <div onClick={() => handleScroll('right')} className="absolute w-8 h-8 minlg:w-12 minlg:h-12 top-45 cursor-pointer right-0">
-                  <Image src={images.right} layout="fill" objectFit="contain" alt="left_arrow" className={theme === 'light' ? 'filter invert' : undefined} />
+                  <Image
+                    src={images.right}
+                    layout="fill"
+                    objectFit="contain"
+                    alt="left_arrow"
+                    className={theme === 'light' ? 'filter invert' : undefined}
+                  />
                 </div>
               </>
               )}
@@ -93,8 +109,8 @@ const Home = () => {
             </div>
           </div>
           <div className="mt-3 w-full flex flex-wrap justify-start md:justify-center">
-            {/* {nfts.map((nft) => <NFTCard key={nft.tokenId} nft={nft} />)} */}
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+            {nfts.map((nft) => <NFTCard key={nft.tokenId} nft={nft} />)}
+            {/* {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
               <NFTCard
                 key={`nft-${i}`}
                 nft={{
@@ -106,7 +122,7 @@ const Home = () => {
                   description: 'Cool NFT on Sale',
                 }}
               />
-            ))}
+            ))} */}
           </div>
         </div>
       </div>

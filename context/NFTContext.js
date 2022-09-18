@@ -10,19 +10,21 @@ import { MarketAddress, MarketAddressABI } from './constants';
 const projectId = '2EkC73kHZ7FbaOWnRmZLN1eUJyK';
 const projectSecret = '292313816d6190ac4ce5f5abb9830cf7';
 const authorization = `Basic ${Buffer.from(`${projectId}:${projectSecret}`).toString('base64')}`;
+
 const client = create({
   url: 'https://infura-ipfs.io:5001/api/v0',
   headers: {
     authorization,
   },
 });
+
 const fetchContract = (signerOrProvider) => new ethers.Contract(MarketAddress, MarketAddressABI, signerOrProvider);
 
 export const NFTContext = React.createContext();
 
 export const NFTProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState('');
-  const nftCurrency = 'Kosmos';
+  const nftCurrency = 'Graffity';
 
   useEffect(() => {
     checkIfWalletIsConnect();
@@ -66,11 +68,8 @@ export const NFTProvider = ({ children }) => {
     const data = JSON.stringify({ name, description, image: fileUrl });
     try {
       const added = await client.add(data);
-      console.log('1');
       const url = `https://infura-ipfs.io/ipfs/${added.path}`;
-      console.log('2');
       await createSale(url, price);
-      console.log('3');
       router.push('/');
     } catch (error) {
       console.log(`Error uploading file to IPFS :" ${error}`);
@@ -97,22 +96,15 @@ export const NFTProvider = ({ children }) => {
     const contract = fetchContract(provider);
 
     const data = await contract.fetchMarketItems();
-    const items = await Promise.all(data.map(async ({ tokenId, seller, owner, price: unformatedPrice }) => {
+
+    const items = await Promise.all(data.map(async ({ tokenId, seller, owner, price: unformattedPrice }) => {
       const tokenURI = await contract.tokenURI(tokenId);
       const { data: { image, name, description } } = await axios.get(tokenURI);
-      const price = ethers.utils.parseUnits(unformatedPrice, 'ether');
+      const price = ethers.utils.formatUnits(unformattedPrice.toString(), 'ether');
 
-      return {
-        price,
-        tokenId: tokenId.toNumber(),
-        seller,
-        owner,
-        image,
-        name,
-        description,
-        tokenURI,
-      };
+      return { price, tokenId: tokenId.toNumber(), seller, owner, image, name, description, tokenURI };
     }));
+
     return items;
   };
 

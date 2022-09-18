@@ -86,7 +86,7 @@ const Navbar = () => {
               height={32}
               alt="logo"
             />
-            <p className="dark: text-white text-nft-black-1 font-semibold text-lg ml-1">Cryptopolis</p>
+            <p className="dark: text-white text-nft-black-1 font-semibold text-lg ml-1">Graffitication</p>
           </div>
         </Link>
         <Link href="/">

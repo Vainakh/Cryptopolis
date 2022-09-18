@@ -5,9 +5,8 @@ import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 
-import { route } from 'next/dist/server/router';
 import { NFTContext } from '../context/NFTContext';
-import { Button, Input, Loader } from '../components/index';
+import { Button, Input, Loader } from '../components';
 import images from '../assets';
 
 const CreateNFT = () => {
