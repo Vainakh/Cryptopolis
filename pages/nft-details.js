@@ -136,7 +136,7 @@ const NFTDetails = () => {
               />
             </div>
         )}
-          handleClick={() => {}}
+          handleClose={() => setPaymentModal(false)}
         />
       )}
     </div>
