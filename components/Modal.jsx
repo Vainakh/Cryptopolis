@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import images from '../assets';
 
-const Modal = () => {
+const Modal = ({ header, body, footer, handleClose }) => {
   const modalRef = useRef(null);
   const { theme } = useTheme();
   return (
@@ -15,13 +15,13 @@ const Modal = () => {
           </div>
         </div>
         <div className="flexCenter w-full text-center p-4">
-          <h2 className="font-poppins dark:text-white text-nft-black-1 font-normal text-2xl">Header Title</h2>
+          <h2 className="font-poppins dark:text-white text-nft-black-1 font-normal text-2xl">{header}</h2>
         </div>
         <div className="p-10 sm:px-4 border-t border-b dark:border-nft-black-3 border-nft-gray-1">
-          Body
+          { body }
         </div>
         <div className="flexCenter p-4">
-          Footer
+          { footer }
         </div>
       </div>
     </div>

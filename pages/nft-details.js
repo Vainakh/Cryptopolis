@@ -6,6 +6,12 @@ import { NFTContext } from '../context/NFTContext';
 import { NFTCard, Loader, Button, Modal } from '../components';
 import { shortenAddress } from '../utils/shortenAddress';
 
+const PaymentBodyCmp = ({ nft, nftCurrency }) => (
+  <div>
+    Test
+  </div>
+);
+
 const NFTDetails = () => {
   const { currentAccount, nftCurrency } = useContext(NFTContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -83,7 +89,18 @@ const NFTDetails = () => {
         </div>
       </div>
 
-      <Modal />
+      <Modal
+        header="Check Out"
+        body={
+          <PaymentBodyCmp nft={nft} nftCurrency={nftCurrency} />
+        }
+        footer={(
+          <div>
+            Custom Footer
+          </div>
+        )}
+        handleClick={() => {}}
+      />
     </div>
   );
 };
