@@ -24,7 +24,7 @@ export const NFTContext = React.createContext();
 
 export const NFTProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState('');
-  const nftCurrency = 'Graffity';
+  const nftCurrency = 'Grfft';
 
   useEffect(() => {
     checkIfWalletIsConnect();
