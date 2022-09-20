@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import images from '../assets';
 import { NFTContext } from '../context/NFTContext';
-import { NFTCard, Loader, Button } from '../components';
+import { NFTCard, Loader, Button, Modal } from '../components';
 import { shortenAddress } from '../utils/shortenAddress';
 
 const NFTDetails = () => {
@@ -81,8 +81,9 @@ const NFTDetails = () => {
               />
             )}
         </div>
-
       </div>
+
+      <Modal />
     </div>
   );
 };
