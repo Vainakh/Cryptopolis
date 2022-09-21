@@ -150,8 +150,16 @@ const NFTDetails = () => {
       <Modal
         header="Payment Successful"
         body={(
-          <div>
-            body
+          <div className="flexCenter flex-col text-center" onClick={() => setSuccessModal(false)}>
+            <div className="relative h-52 w-52">
+              <img src={nft.image} />
+            </div>
+            <p className="font-poppins dark:text-white text-nft-black-1 text-sm minlg:text-xl font-normal mt-10">
+              You successfully purchased
+              <span className="font-semibold">  { nft.name }  </span>
+              from
+              <span className="font-semibold">  {shortenAddress(nft.seller)}  </span>
+            </p>
           </div>
         )}
         footer={(
