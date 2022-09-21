@@ -107,16 +107,22 @@ const NFTDetails = () => {
         </div>
 
         <div className="flex flex-row sm:flex-col mt-10">
-          {currentAccount === nft.seller.toLowerCase()
+          { currentAccount === nft.seller.toLowerCase()
             ? (
               <p className="font-poppins dark:text-white text-nft-black-1 text-base font-normal border border-grey p-2">
                 You cannot buy your own NFT
               </p>
             )
-            : (
+            : currentAccount === nft.owner.toLowerCase() ? (
+              <Button
+                btnName="List on Marketplace"
+                classStyles="mr-5 sm:mr-0 sm:mb-5 rounded-xl"
+                handleClick={() => router.push(`/resell-nft?tokenId=${nft.tokenId}&tokenURI=${nft.tokenURI}`)}
+              />
+            ) : (
               <Button
                 btnName={`Buy for ${nft.price} ${nftCurrency}`}
-                classStyles="mr-5 sm:mr-0 rounded-xl"
+                classStyles="mr-5 sm:mr-0 sm:mb-5 rounded-xl"
                 handleClick={() => setPaymentModal(true)}
               />
             )}
@@ -147,32 +153,35 @@ const NFTDetails = () => {
         />
       )}
 
-      <Modal
-        header="Payment Successful"
-        body={(
-          <div className="flexCenter flex-col text-center" onClick={() => setSuccessModal(false)}>
-            <div className="relative h-52 w-52">
-              <img src={nft.image} />
+      {successModal
+        && (
+        <Modal
+          header="Payment Successful"
+          body={(
+            <div className="flexCenter flex-col text-center" onClick={() => setSuccessModal(false)}>
+              <div className="relative h-52 w-52">
+                <img src={nft.image} />
+              </div>
+              <p className="font-poppins dark:text-white text-nft-black-1 text-sm minlg:text-xl font-normal mt-10">
+                You successfully purchased
+                <span className="font-semibold">  { nft.name }  </span>
+                from
+                <span className="font-semibold">  {shortenAddress(nft.seller)}  </span>
+              </p>
             </div>
-            <p className="font-poppins dark:text-white text-nft-black-1 text-sm minlg:text-xl font-normal mt-10">
-              You successfully purchased
-              <span className="font-semibold">  { nft.name }  </span>
-              from
-              <span className="font-semibold">  {shortenAddress(nft.seller)}  </span>
-            </p>
-          </div>
         )}
-        footer={(
-          <div className="flexCenter flex-col">
-            <Button
-              btnName="Check it out"
-              classStyles="sm:mb-5 sm:mr-0 rounded-xl"
-              handleClick={() => router.push('/my-nfts')}
-            />
-          </div>
+          footer={(
+            <div className="flexCenter flex-col">
+              <Button
+                btnName="Check it out"
+                classStyles="sm:mb-5 sm:mr-0 rounded-xl"
+                handleClick={() => router.push('/my-nfts')}
+              />
+            </div>
         )}
-        handleClose={() => setPaymentModal(false)}
-      />
+          handleClose={() => setPaymentModal(false)}
+        />
+        )}
     </div>
   );
 };
