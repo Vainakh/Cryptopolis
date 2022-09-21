@@ -5,7 +5,7 @@ import { NFTContext } from '../context/NFTContext';
 import { NFTCard, Loader, Banner, Input, Button } from '../components';
 
 const ResellNFT = () => {
-  const {} = useContext(NFTContext);
+  const { createSale } = useContext(NFTContext);
   const router = useRouter();
   const { tokenId, tokenURI } = router.query;
   const [price, setPrice] = useState('');
@@ -24,7 +24,8 @@ const ResellNFT = () => {
   }, [tokenURI]);
 
   const resell = async () => {
-
+    await createSale(tokenURI, price, true, tokenId);
+    router.push('/');
   };
 
   if (isLoading) {
