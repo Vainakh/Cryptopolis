@@ -7,7 +7,7 @@ import { NFTContext } from '../context/NFTContext';
 import { shortenAddress } from '../utils/shortenAddress';
 
 const NFTCard = ({ nft, onProfilePage }) => {
-  console.log({ nft });
+  // console.log({ nft });
   const { nftCurrency } = useContext(NFTContext);
 
   return (
@@ -16,7 +16,6 @@ const NFTCard = ({ nft, onProfilePage }) => {
         <div className="relative w-full h-52 sm:h-36 xs:h-56 minmd:h-60 minlg:h-300 rounded-2xl overflow-hidden">
           {/* <Image src={nft.image || images[`nft${nft.i}`]} layout="fill" objectFit="cover" alt="nft01" /> */}
           <img src={nft.image || images[`nft${nft.i}`]} />
-
         </div>
         <div className="mt-3 flex flex-col">
           <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-sm minlg:text-xl">{nft.name}</p>

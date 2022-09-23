@@ -5,6 +5,7 @@ import { Banner, CreatorCard, NFTCard } from '../components';
 import images from '../assets';
 import { makeid } from '../utils/makeId';
 import { NFTContext } from '../context/NFTContext';
+import { getCreators } from '../utils/getTopCreators';
 
 const Home = () => {
   const { fetchNFTs } = useContext(NFTContext);
@@ -18,13 +19,12 @@ const Home = () => {
     fetchNFTs()
       .then((items) => {
         setNFTs(items);
-        console.log(items);
+        console.log({ items });
       });
   }, []);
 
   const handleScroll = (direction) => {
     const { current } = scrollRef;
-
     const scrollAmount = window.innerWidth > 1800 ? 270 : 210;
 
     if (direction === 'left') {
@@ -54,6 +54,10 @@ const Home = () => {
     };
   });
 
+  const topCreators = getCreators(nfts);
+
+  console.log(topCreators);
+
   return (
     <div className="flex justify-center sm:px-4 p-12">
       <div className="w-full minmd:w-4/5">
@@ -66,7 +70,7 @@ const Home = () => {
           <h1 className="font-poppins dark:text-white text-nft-black-1 text-2xl minlg:text-4xl font-semibold ml-4 xs:ml-0">Best Creators</h1>
           <div className="relative flex-1 max-w-full flex mt-3" ref={parentRef}>
             <div className="flex flex-row w-max overflow-x-scroll no-scrollbar select-none" ref={scrollRef}>
-              {[1, 2, 3, 4, 5, 6].map((i) => (
+              { topCreators.forEach((i) => (
                 <CreatorCard
                   key={`creator-${i}`}
                   rank={i}
@@ -75,6 +79,15 @@ const Home = () => {
                   creatorEths={10 - i * 0.5}
                 />
               ))}
+              {/* {[1, 2, 3, 4, 5, 6].map((i) => (
+                <CreatorCard
+                  key={`creator-${i}`}
+                  rank={i}
+                  creatorImage={images[`creator${i}`]}
+                  creatorName={`0x${makeid(3)}...${makeid(4)}`}
+                  creatorEths={10 - i * 0.5}
+                />
+              ))} */}
               {!hideButtons && (
               <>
                 <div onClick={() => handleScroll('left')} className="absolute w-8 h-8 minlg:w-12 minlg:h-12 top-45 cursor-pointer left-0">

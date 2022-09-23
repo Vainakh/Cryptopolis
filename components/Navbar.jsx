@@ -39,7 +39,7 @@ const MenuItems = ({ isMobile, active, setActive }) => {
 
 const ButtonGroup = ({ setActive, router }) => {
   const { connectWallet, currentAccount } = useContext(NFTContext);
-  console.log({ currentAccount });
+  // console.log({ currentAccount });
 
   return currentAccount
     ? (
@@ -66,7 +66,7 @@ const Navbar = () => {
   const [active, setActive] = useState('Explore NFTs');
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(true);
-  console.log({ theme });
+  // console.log({ theme });
   return (
     <nav className="flexBetween w-full fixed
                     z-10 p-4 flex-row border-b
