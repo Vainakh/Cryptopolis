@@ -1,18 +1,18 @@
+import React from 'react';
+
 export const getCreators = (nfts) => {
-  const finalized = [];
   const creators = nfts.reduce((creatorObject, nft) => {
+    console.log(creatorObject);
     (creatorObject[nft.seller] = creatorObject[nft.seller] || []).push(nft);
     return creatorObject;
   }, {});
 
-  Object.entries(creators).map((creator) => {
+  Object.entries(creators).forEach((creator) => {
     const seller = creator[0];
     const sum = creator[1].map((item) => Number(item.price)).reduce((prev, curr) => prev + curr, 0);
-    // return ({ seller, sum });
-    finalized.push({ seller, sum });
+    console.log({ seller, sum });
+    return ({ seller, sum });
   });
-
-  return finalized;
 };
 
 // export const getCreators = (array) => {
