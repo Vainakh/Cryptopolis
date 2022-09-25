@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import images from '../assets';
 
-const SearchBar = ({ activeSelect, setActiveSelect, handleSearch }) => {
+const SearchBar = ({ activeSelect, setActiveSelect, handleSearch, clearSearch }) => {
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState(search);
   const [toggle, setToggle] = useState(false);
@@ -21,7 +21,7 @@ const SearchBar = ({ activeSelect, setActiveSelect, handleSearch }) => {
     if (search) {
       handleSearch(search);
     } else {
-    //   clearSearch();
+      clearSearch();
     }
   }, [search]);
 
