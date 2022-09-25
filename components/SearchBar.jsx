@@ -63,7 +63,12 @@ const SearchBar = ({ activeSelect, setActiveSelect, handleSearch, clearSearch })
                        dark:border-nft-black-2 border-nft-grey-2 py-3 px-4 rounded-md"
         >
           {['Recently Added', 'Price (low to high)', 'Price (high to low)'].map((item) => (
-            <p className="font-poppins dark:text-white text-nft-black-1 font-normal text-xs my-3 cursor-pointer">
+            <p
+              className="font-poppins dark:text-white
+                         text-nft-black-1 font-normal text-xs my-3 cursor-pointer"
+              onClick={setActiveSelect(item)}
+              key={item}
+            >
               {item}
             </p>
           ))}
