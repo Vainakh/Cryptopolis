@@ -5,11 +5,12 @@ import images from '../assets';
 
 const SearchBar = () => {
   const [search, setSearch] = useState('');
+  const [toggle, setToggle] = useState(false);
   const { theme } = useTheme();
 
   return (
     <>
-      <div className="flex-1 flexCenter dark:bg-nft-black-2 bg-white border dark:border-nft-black-2 border-nft-grey-2 px-4 rounded-md">
+      <div className="flex-1 flexCenter dark:bg-nft-black-2 bg-white border dark:border-nft-black-2 border-nft-grey-2 px-4 py-3 rounded-md">
         <Image
           src={images.search}
           objectFit="contain"
@@ -27,13 +28,30 @@ const SearchBar = () => {
         />
       </div>
       <div
-        onClick={() => {}}
+        onClick={() => setToggle((prev) => !prev)}
         className="relative flexBetween ml-4 sm:ml-0 sm:mt-2 min-w-190 cursor-pointer dark:bg-nft-black-2 bg-white-border dark:border-nft-black-2 border-nft-grey-2 px-4 rounded-md"
       >
         <p className="font-poppins dark:text-white text-nft-black-1 font-normal text-xs">Recently listed</p>
         <Image
           src={images.arrow}
+          objectFit="contain"
+          width={15}
+          height={15}
+          alt="arrow"
+          className={theme === 'light' && 'filter invert'}
         />
+        {toggle && (
+        <div className="absolute top-full left-0 ight-0 w-full mt-3 z-10
+                       dark:bg-nft-black-2 bg-white-border
+                       dark:border-nft-black-2 border-nft-grey-2 py-3 px-4 rounded-md"
+        >
+          {['Recently Added', 'Price (low to high)', 'Price (high to low)'].map((item) => (
+            <p className="font-poppins dark:text-white text-nft-black-1 font-normal text-xs my-3 cursor-pointer">
+              {item}
+            </p>
+          ))}
+        </div>
+        )}
       </div>
     </>
   );
